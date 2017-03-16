@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using NFluent;
+using FluentAssertions;
 using Xunit;
 
 namespace CQRS
@@ -14,7 +14,8 @@ namespace CQRS
             var tweet = new Tweet();
             var tweetPublished = tweet.Publish("s");
 
-            Check.That(tweetPublished).Equals(new TweetPublished("s"));
+            tweetPublished.Should().Be(new TweetPublished("s"));
+            // Check.That(tweetPublished).Equals(new TweetPublished("s"));
         }
 
         [Fact]
@@ -23,7 +24,8 @@ namespace CQRS
             var tweet = new Tweet(new List<IEvent> { new TweetPublished("s")});
             var tweetDeleted = tweet.Delete();
 
-            Check.That(tweetDeleted).Equals(new TweetDeleted());
+            tweetDeleted.Should().Be(new TweetDeleted());
+            // Check.That(tweetDeleted).Equals(new TweetDeleted());
         }
 
         [Fact]
@@ -33,7 +35,8 @@ namespace CQRS
 
             var tweetDeleted = tweet.Delete();
 
-            Check.That(tweetDeleted).Equals(new DeleteNotPossible());
+            tweetDeleted.Should().Be(new DeleteNotPossible());
+            // Check.That(tweetDeleted).Equals(new DeleteNotPossible());
         }
 
         [Fact]
@@ -47,7 +50,7 @@ namespace CQRS
 
             var tweetDeleted = tweet.Delete();
 
-            Check.That(tweetDeleted).Equals(new DeleteNotPossible());
+            // Check.That(tweetDeleted).Equals(new DeleteNotPossible());
         }
 
 
